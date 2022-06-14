@@ -19,21 +19,24 @@ export class UsersService {
     }
   }
 
-  //   async readAll(@Res() response) {
-  //     const users = await this.usersModel.find()
-  //     return response.status(HttpStatus.OK).json({
-  //       users
-  //     })
-  //   }
-  async update(usersDto: UsersDto) {
-    console.log(usersDto)
-    const user = await this.usersModel.findOneAndReplace()
+  async getusers(): Promise<any> {
+    const users = await this.usersModel.find()
+    return users
+    console.log(users)
+  }
+  async edit(id, usersDto: UsersDto): Promise<any> {
+    // console.log(usersDto)
+    const { name, age, address, phone, email } = usersDto
+    const user = new this.usersModel({ name, age, address, phone, email })
+    user._id = id
+    console.log(user, id, user._id)
+    await this.usersModel.findByIdAndUpdate(id, user, {
+      new: true
+    })
   }
 
-  // async findByIdAndRemove(@Res() response, @Param('id') id) {
-  //   const studentDeleted = await this.usersModel.findByIdAndRemove(id)
-  //   return response
-  //     .status(HttpStatus.OK)
-  //     .json({ studentDeleted: studentDeleted, msg: 'deleted succesfully' })
-  // }
+  async delete(@Param('id') id) {
+    const studentDeleted = await this.usersModel.findByIdAndRemove(id)
+    return { studentDeleted: studentDeleted, msg: 'deleted succesfully' }
+  }
 }

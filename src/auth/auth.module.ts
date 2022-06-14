@@ -11,8 +11,7 @@ import { LocalStrategy } from './strategies/local.strategy'
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'Auth', schema: UserSchema }]),
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,

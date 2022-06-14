@@ -9,7 +9,7 @@ import { User } from './interface/user.interface'
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel('User') private userModel: Model<User>,
+    @InjectModel('Auth') private userModel: Model<User>,
     private jwtService: JwtService
   ) {}
 

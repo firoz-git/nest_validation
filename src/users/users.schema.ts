@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose'
 export const UsersSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
+    // unique: true,
     require: true
   },
   age: {
@@ -21,6 +21,7 @@ export const UsersSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    require: true
+    require: true,
+    unique: true
   }
 })

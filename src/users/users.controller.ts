@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   ValidationPipe
@@ -10,27 +11,31 @@ import {
 import { UsersService } from './users.service'
 import { UsersDto } from './dto/users.dto'
 import { Users } from './interface/users.interface'
+import { response } from 'express'
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @Post('/adduser')
-  async adduser(@Body(ValidationPipe) usersDto: UsersDto): Promise<void> {
-    return await this.usersService.adduser(usersDto)
+  async adduser(@Body(ValidationPipe) newUser: UsersDto): Promise<void> {
+    return await this.usersService.adduser(newUser)
   }
-  //   @Get('/getusers')
-  //   async readAll(): Promise<Users> {
-  //     return await this.usersService.find().exec()
-  //   }
+  @Get('/getusers')
+  async getusers(): Promise<void> {
+    return await this.usersService.getusers()
+  }
 
   @Put('/:id')
-  async update(@Body(ValidationPipe) usersDto: UsersDto): Promise<void> {
-    return await this.usersService.update(usersDto)
+  async edit(
+    @Param('id') id,
+    @Body(ValidationPipe) usersDto: UsersDto
+  ): Promise<void> {
+    return await this.usersService.edit(id, usersDto)
   }
 
-  //   @Delete('/:id')
-  //   async findByIdAndRemove4(id): Promise<any> {
-  //     return await this.usersService.findByIdAndRemove(id)
-  //   }
+  @Delete('/delete/:id')
+  async delete(id): Promise<any> {
+    return await this.usersService.delete(id)
+  }
 }
